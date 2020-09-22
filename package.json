@@ -1,0 +1,35 @@
+{
+  "name": "02-express",
+  "version": "1.0.0",
+  "description": "02_express",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index.js",
+    "dev": "nodemon index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Vadim2017777/02-express.git"
+  },
+  "author": "Vadim <svanovivan@gmail.com>",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Vadim2017777/02-express/issues"
+  },
+  "homepage": "https://github.com/Vadim2017777/02-express#readme",
+  "devDependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "joi": "^17.2.1",
+    "morgan": "^1.10.0",
+    "nodemon": "^2.0.4"
+  },
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "jsonwebtoken": "^8.5.1",
+    "mongoose": "^5.10.4",
+    "uuidv4": "^6.2.3"
+  }
+}
