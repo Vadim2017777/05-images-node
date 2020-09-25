@@ -1,8 +1,8 @@
 const express = require("express");
 const cors = require("cors");
 const morgan = require("morgan");
-const userRouter = require("./contacts/contacts.routers");
-const userRouterAuth = require("./auth/users.routers");
+const userRouterAuth = require("./auth/auth.routers");
+const userRouter = require("./user/user.routers");
 const dotenv = require("dotenv");
 const mongoose = require("mongoose");
 dotenv.config();
@@ -26,6 +26,7 @@ module.exports = class UsersServer {
         useNewUrlParser: true,
         useUnifiedTopology: true,
       });
+
       console.log("Database connection successful");
       this.server.use(morgan("combined"));
     } catch (err) {
@@ -37,11 +38,12 @@ module.exports = class UsersServer {
   initMiddlewares() {
     this.server.use(express.json());
     this.server.use(cors({ origin: process.env.PORT }));
+    this.server.use(express.static(__dirname + "/public"));
   }
 
   initRoutes() {
-    this.server.use("/api", userRouter);
     this.server.use("/auth", userRouterAuth);
+    this.server.use("/users", userRouter);
   }
 
   startListening() {

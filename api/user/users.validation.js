@@ -6,7 +6,7 @@ exports.usersValadation = Joi.object({
       minDomainSegments: 2,
     })
     .required(),
-
+  avatarURL: Joi.string(),
   phone: Joi.string().required(),
   subscription: Joi.string(),
   password: Joi.string().required(),

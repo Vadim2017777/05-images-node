@@ -6,6 +6,7 @@ const { Schema } = mongoose;
 const UserSchema = new Schema({
   email: String,
   password: String,
+  avatarURL: String,
   subscription: {
     type: String,
     enum: ["free", "pro", "premium"],
@@ -14,6 +15,6 @@ const UserSchema = new Schema({
   token: String,
 });
 
-const contactModel = mongoose.model("user", UserSchema);
+const UserModel = mongoose.model("user", UserSchema);
 
-module.exports = contactModel;
+module.exports = UserModel;

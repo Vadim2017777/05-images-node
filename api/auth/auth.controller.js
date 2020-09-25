@@ -1,9 +1,10 @@
-const userModel = require("./user.model");
-const { usersValadation } = require("./users.validation");
+const userModel = require("../user/user.model");
+const { usersValadation } = require("../user/users.validation");
 const bcrypjs = require("bcryptjs");
-const jwt = require("jsonwebtoken");
+var jwt = require("jsonwebtoken");
+const { generateAvatar } = require("../helpers/avatarGenerator");
 
-class UserController {
+class UserAuthController {
   constructor() {
     this._costFactor = 4;
   }
@@ -33,7 +34,9 @@ class UserController {
         email,
         password: passwordHash,
         subscription,
+        avatarURL: await generateAvatar(),
       });
+
       return res.status(201).json({
         email,
         subscription,
@@ -107,41 +110,6 @@ class UserController {
       res.status(500).send(err.message);
     }
   }
-
-  async getCurrentUser(req, res, next) {
-    const { email, subscription } = req.user;
-    try {
-      return res.status(200).json({ email, subscription });
-    } catch (err) {
-      res.status(500).send(err.message);
-    }
-  }
-
-  async authorize(req, res, next) {
-    try {
-      const authorizationHeader = req.get("Authorization");
-      const token = authorizationHeader.replace("Bearer ", "");
-
-      let userId;
-      try {
-        userId = await jwt.verify(token, process.env.JWT_SECRET).id;
-      } catch (err) {
-        res.status(401).send("User not authorized");
-      }
-
-      const user = await userModel.findById(userId);
-      if (!user || user.token !== token) {
-        res.status(401).send("User not authorized");
-      }
-
-      req.user = user;
-      req.token = token;
-
-      next();
-    } catch (err) {
-      next(err);
-    }
-  }
 }
 
-module.exports = UserController;
+module.exports = UserAuthController;
